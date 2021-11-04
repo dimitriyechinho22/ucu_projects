@@ -53,3 +53,13 @@ def get_words(f: str, letters: List[str]) -> List[str]:
                     list_f_words.remove(less)
                     break
         return list_f_words
+
+def get_user_words() -> List[str]:
+    """
+    Gets words from user input and returns a list with these words.
+    Usage: enter a word or press ctrl+d to finish.
+    """
+    user_words = input()
+    user_words = user_words.strip()
+    user_words = user_words.split()
+    return user_words
