@@ -63,3 +63,26 @@ def get_user_words() -> List[str]:
     user_words = user_words.strip()
     user_words = user_words.split()
     return user_words
+
+
+def get_pure_user_words(user_words: List[str], letters: List[str], list_f_words: List[str]) -> List[str]:
+    """
+    (list, list, list) -> list
+
+    Checks user words with the rules and returns list of those words
+    that are not in dictionary.
+    """
+    pure_list = []
+    for wor in user_words:
+        letter_of_wor = [j for j in wor]
+        if len(wor) >= 4 and letters[4] in wor:
+            rule = True
+        else:
+            rule = False
+        for let in letter_of_wor:
+            if letter_of_wor.count(let) < letters.count(let):
+                rule = True
+            else:
+                rule = False
+            if rule and wor not in list_f_words:
+                pure_list.append(wor)
