@@ -65,4 +65,48 @@ def get_user_words() -> List[str]:
     user_words = user_words.split()
     return user_words
 
+def get_pure_user_words(user_words: List[str], letters: List[str], list_f_words: List[str]) -> List[str]:
+    """
+    (list, list, list) -> list
+
+    Checks user words with the rules and returns list of those words
+    that are not in dictionary.
+    """
+    pure_list = []
+    for wor in user_words:
+        letter_of_wor = [j for j in wor]
+        if len(wor) >= 4 and letters[4] in wor:
+            rule = True
+        else:
+            rule = False
+        for let in letter_of_wor:
+            if letter_of_wor.count(let) < letters.count(let):
+                rule = True
+            else:
+                rule = False
+            if rule and wor not in list_f_words:
+                pure_list.append(wor)
+
+
+def results():
+    letters = []
+    gen = generate_grid()
+    for i in gen:
+        print(i)
+    for i in gen:
+        for j in i:
+            letters.append(j.lower())
+    us_words = get_user_words()
+    needed_words = get_words('en.txt', letters)
+    print(needed_words)
+    print(us_words)
+    pure_words = get_pure_user_words(us_words, letters, needed_words)
+    print(pure_words)
+    with open('result.txt', 'w') as result:
+        for i in gen:
+            result.writelines(f'{i}\n')
+        result.writelines(needed_words + '\n')
+        result.writelines(us_words + '\n')
+        result.writelines(pure_words + '\n')
+
 
